@@ -2,7 +2,7 @@ using FluentMigrator;
 
 namespace SavageMetals.Api.Migrations;
 
-[Migration(202611131830)]
+[Migration(202611131931)]
 public class AddUniqueVendorName : Migration
 {
     public override void Up()
