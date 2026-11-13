@@ -1,4 +1,4 @@
-namespace SavageMetals.Api.Enums;
+namespace SavageMetals.Api.Core.Enums;
 
 public enum MaterialGrade
 {

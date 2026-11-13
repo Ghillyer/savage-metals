@@ -1,6 +1,6 @@
-using SavageMetals.Api.Enums;
+using SavageMetals.Api.Core.Enums;
 
-namespace SavageMetals.Api.Models;
+namespace SavageMetals.Api.Core.Models;
 
 public class PurchaseOrderLine
 {
