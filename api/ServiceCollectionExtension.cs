@@ -21,10 +21,12 @@ public static class ServiceCollectionExtension
         // Repositories
         services.AddScoped<ILocationRepository, LocationRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IVendorRepository, VendorRepository>();
 
         // Services
         services.AddScoped<ILocationService, LocationService>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IVendorService, VendorService>();
 
         return services;
     }
