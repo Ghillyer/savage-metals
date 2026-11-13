@@ -11,13 +11,19 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection AddSavageMetalsServices(this IServiceCollection services, IConfiguration configuration)
     {
+        // Error handling
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
+        // Factories
         services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
+        // Repositories
+        services.AddScoped<ILocationRepository, LocationRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
 
+        // Services
+        services.AddScoped<ILocationService, LocationService>();
         services.AddScoped<IProductService, ProductService>();
 
         return services;
