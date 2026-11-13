@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/api/">
+    <Project Path="api/SavageMetals.Api.csproj" />
+  </Folder>
+</Solution>
