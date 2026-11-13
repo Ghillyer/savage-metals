@@ -1,6 +1,0 @@
-@SavageMetals.Api_HostAddress = http://localhost:5189
-
-GET {{SavageMetals.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
