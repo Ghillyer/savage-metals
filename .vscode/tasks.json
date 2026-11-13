@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-api",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/api/SavageMetals.Api.csproj"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-migrations",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/migrations/SavageMetals.Migrations.csproj"],
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

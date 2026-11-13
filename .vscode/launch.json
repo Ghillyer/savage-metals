@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start API",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-api",
+      "program": "${workspaceFolder}/api/bin/Debug/net10.0/SavageMetals.Api.dll",
+      "cwd": "${workspaceFolder}/api",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5189"
+      }
+    },
+    {
+      "name": "Start App",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/app"
+    },
+    {
+      "name": "Migrations Console",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-migrations",
+      "program": "${workspaceFolder}/migrations/bin/Debug/net10.0/SavageMetals.Migrations.dll",
+      "cwd": "${workspaceFolder}/migrations",
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Start API + App",
+      "configurations": ["Start API", "Start App"]
+    }
+  ]
+}
