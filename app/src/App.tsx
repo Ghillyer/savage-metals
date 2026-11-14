@@ -1,12 +1,16 @@
-import { Button, Container, Stack, Typography } from '@mui/material';
+import { Navigate, Route, Routes } from 'react-router';
+import { LoginPage } from './auth/LoginPage';
+import { RequireAuth } from './auth/RequireAuth';
+import { HomePage } from './features/home/HomePage';
 
 export default function App() {
   return (
-    <Container maxWidth="sm" sx={{ py: 4 }}>
-      <Stack spacing={2}>
-        <Typography variant="h4">Savage Metals</Typography>
-        <Button variant="contained">Big iPad Button</Button>
-      </Stack>
-    </Container>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route element={<RequireAuth />}>
+        <Route path="/" element={<HomePage />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
