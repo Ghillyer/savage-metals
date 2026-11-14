@@ -1,9 +1,16 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using SavageMetals.Api.Core.Enums;
 using SavageMetals.Api.Core.Interfaces;
 using SavageMetals.Api.Core.Repositories;
 using SavageMetals.Api.DAL;
 using SavageMetals.Api.Factories;
 using SavageMetals.Api.Middleware;
+using SavageMetals.Api.Security;
 using SavageMetals.Api.Services;
+using SavageMetals.Api.Settings;
 
 namespace SavageMetals.Api;
 
@@ -14,6 +21,43 @@ public static class ServiceCollectionExtension
         // Error handling
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
+
+        // Authentication
+        var firebaseSettings = configuration.GetSection(FirebaseSettings.SectionName).Get<FirebaseSettings>()
+            ?? throw new InvalidOperationException("Firebase settings are not configured.");
+
+        if (string.IsNullOrWhiteSpace(firebaseSettings.ProjectId))
+        {
+            throw new InvalidOperationException("Firebase:ProjectId is not configured.");
+        }
+
+        var issuer = $"https://securetoken.google.com/{firebaseSettings.ProjectId}";
+
+        services.AddScoped<CallerContext>();
+        services.AddScoped<ICallerContext>(serviceProvider => serviceProvider.GetRequiredService<CallerContext>());
+        services.AddScoped<FirebaseJwtBearerEvents>();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = issuer;
+                options.MapInboundClaims = false;
+                options.EventsType = typeof(FirebaseJwtBearerEvents);
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = issuer,
+                    ValidateAudience = true,
+                    ValidAudience = firebaseSettings.ProjectId,
+                    ValidateLifetime = true,
+                    RoleClaimType = ClaimTypes.Role
+                };
+            });
+
+        // Authorization
+        services.AddAuthorizationBuilder()
+            .SetFallbackPolicy(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build())
+            .AddPolicy(Policies.AdminOnly, policy => policy.RequireRole(nameof(UserRole.Admin)));
 
         // Factories
         services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
