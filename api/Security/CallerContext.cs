@@ -2,7 +2,7 @@ using SavageMetals.Api.Core.Enums;
 using SavageMetals.Api.Core.Interfaces;
 using SavageMetals.Api.Core.Models;
 
-namespace SavageMetals.Api.Core;
+namespace SavageMetals.Api.Security;
 
 public class CallerContext : ICallerContext
 {
