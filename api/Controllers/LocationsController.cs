@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SavageMetals.Api.Core.DTOs.Locations;
 using SavageMetals.Api.Core.Interfaces;
+using SavageMetals.Api.Security;
 
 namespace SavageMetals.Api.Controllers;
 
@@ -26,8 +28,10 @@ public class LocationsController(ILocationService locationService) : ControllerB
     }
 
     [HttpPost]
+    [Authorize(Policy = Policies.AdminOnly)]
     [ProducesResponseType<LocationResponse>(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<LocationResponse>> Create(LocationRequest request, CancellationToken cancellationToken)
     {
@@ -36,8 +40,10 @@ public class LocationsController(ILocationService locationService) : ControllerB
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Policy = Policies.AdminOnly)]
     [ProducesResponseType<LocationResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<LocationResponse>> Update(int id, LocationRequest request, CancellationToken cancellationToken)

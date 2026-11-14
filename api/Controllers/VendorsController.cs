@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SavageMetals.Api.Core.DTOs.Vendors;
 using SavageMetals.Api.Core.Enums;
 using SavageMetals.Api.Core.Interfaces;
+using SavageMetals.Api.Security;
 
 namespace SavageMetals.Api.Controllers;
 
@@ -28,8 +30,10 @@ public class VendorsController(IVendorService vendorService) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = Policies.AdminOnly)]
     [ProducesResponseType<VendorResponse>(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<VendorResponse>> Create(VendorRequest request, CancellationToken cancellationToken)
     {
@@ -38,8 +42,10 @@ public class VendorsController(IVendorService vendorService) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Policy = Policies.AdminOnly)]
     [ProducesResponseType<VendorResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<VendorResponse>> Update(int id, VendorRequest request, CancellationToken cancellationToken)
