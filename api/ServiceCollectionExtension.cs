@@ -59,6 +59,14 @@ public static class ServiceCollectionExtension
             .SetFallbackPolicy(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build())
             .AddPolicy(Policies.AdminOnly, policy => policy.RequireRole(nameof(UserRole.Admin)));
 
+        // CORS
+        var corsSettings = configuration.GetSection(CorsSettings.SectionName).Get<CorsSettings>() ?? new CorsSettings();
+
+        services.AddCors(options => options.AddPolicy(CorsSettings.PolicyName, policy => policy
+            .WithOrigins(corsSettings.AllowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod()));
+
         // Factories
         services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 

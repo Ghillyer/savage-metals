@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SavageMetals.Api;
+using SavageMetals.Api.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(CorsSettings.PolicyName);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
