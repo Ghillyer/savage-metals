@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { LoginPage } from './auth/LoginPage';
 import { RequireAuth } from './auth/RequireAuth';
 import { AppLayout } from './components/AppLayout';
+import { CreatePurchaseOrderPage } from './features/purchase-orders/CreatePurchaseOrderPage';
 import { PurchaseOrdersPage } from './features/purchase-orders/PurchaseOrdersPage';
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate to="/purchase-orders" replace />} />
           <Route path="/purchase-orders" element={<PurchaseOrdersPage />} />
+          <Route path="/purchase-orders/new" element={<CreatePurchaseOrderPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,4 +1,6 @@
-import { Alert, Box, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Link } from 'react-router';
+import { Alert, Box, Button, CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import { formatCurrency, formatDateTime } from '../../lib/format';
 import { usePurchaseOrders } from './usePurchaseOrders';
 import { PurchaseOrderStatusChip } from './PurchaseOrdersStatusChip';
@@ -8,7 +10,10 @@ export function PurchaseOrdersPage() {
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 3 }}>Purchase Orders</Typography>
+      <Stack direction="row" sx={{ mb: 3, alignItems: 'center', justifyContent: 'space-between' }}>
+        <Typography variant="h4">Purchase Orders</Typography>
+        <Button component={Link} to="/purchase-orders/new" variant="contained" startIcon={<AddIcon />}>New purchase order</Button>
+      </Stack>
       {isPending && <CircularProgress />}
       {isError && <Alert severity="error">Purchase orders couldn't be loaded.</Alert>}
       {purchaseOrders?.length === 0 && <Typography color="text.secondary">No purchase orders yet.</Typography>}
