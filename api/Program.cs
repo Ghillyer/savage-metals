@@ -1,11 +1,16 @@
 using System.Text.Json.Serialization;
 using SavageMetals.Api;
+using SavageMetals.Api.Converters;
 using SavageMetals.Api.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.Converters.Add(new UtcDateTimeConverter());
+    });
 builder.Services.AddOpenApi();
 builder.Services.AddSavageMetalsServices(builder.Configuration);
 
