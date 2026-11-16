@@ -4,6 +4,7 @@ import type { PurchaseOrderSummary } from '../../types/purchaseOrder';
 
 export const purchaseOrderKeys = {
   all: ['purchase-orders'] as const,
+  detail: (id: number) => [...purchaseOrderKeys.all, id] as const,
 };
 
 export function usePurchaseOrders() {

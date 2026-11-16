@@ -45,3 +45,13 @@ export interface PurchaseOrderRequest {
   vendorId: number;
   lines: PurchaseOrderLineRequest[];
 }
+
+export interface ReceiveLineRequest {
+  purchaseOrderLineId: number;
+  tagNumber: string;
+  locationId: number;
+}
+
+export interface ReceivePurchaseOrderRequest {
+  lines: ReceiveLineRequest[];
+}

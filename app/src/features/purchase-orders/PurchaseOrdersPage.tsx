@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Alert, Box, Button, CircularProgress, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { formatCurrency, formatDateTime } from '../../lib/format';
@@ -6,6 +6,7 @@ import { usePurchaseOrders } from './usePurchaseOrders';
 import { PurchaseOrderStatusChip } from './PurchaseOrdersStatusChip';
 
 export function PurchaseOrdersPage() {
+  const navigate = useNavigate();
   const { data: purchaseOrders, isPending, isError } = usePurchaseOrders();
 
   return (
@@ -31,7 +32,7 @@ export function PurchaseOrdersPage() {
             </TableHead>
             <TableBody>
               {purchaseOrders.map((purchaseOrder) => (
-                <TableRow key={purchaseOrder.id} sx={{ height: 56 }}>
+                <TableRow key={purchaseOrder.id} hover onClick={() => navigate(`/purchase-orders/${purchaseOrder.id}`)} sx={{ height: 56, cursor: 'pointer' }}>
                   <TableCell>{purchaseOrder.poNumber}</TableCell>
                   <TableCell>{purchaseOrder.vendorName}</TableCell>
                   <TableCell><PurchaseOrderStatusChip status={purchaseOrder.status} /></TableCell>
