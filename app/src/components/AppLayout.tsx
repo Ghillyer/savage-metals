@@ -3,10 +3,12 @@ import { Link, Outlet, useLocation } from 'react-router';
 import { AppBar, Box, Button, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import CategoryIcon from '@mui/icons-material/Category';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { useAuth } from '../auth/useAuth';
+import { useIsAdmin } from '../auth/useIsAdmin';
 
 const drawerWidth = 240;
 
@@ -14,6 +16,7 @@ interface NavItem {
   label: string;
   path: string;
   icon: ReactNode;
+  adminOnly?: boolean;
 }
 
 const navItems: NavItem[] = [
@@ -21,6 +24,7 @@ const navItems: NavItem[] = [
   { label: 'Work Orders', path: '/work-orders', icon: <PrecisionManufacturingIcon /> },
   { label: 'Sales Orders', path: '/sales-orders', icon: <LocalShippingIcon /> },
   { label: 'Reports', path: '/reports', icon: <AssessmentIcon /> },
+  { label: 'Products', path: '/products', icon: <CategoryIcon />, adminOnly: true },
 ];
 
 export function AppLayout() {
@@ -29,6 +33,8 @@ export function AppLayout() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isAdmin = useIsAdmin();
+  const visibleNavItems = navItems.filter((item) => !item.adminOnly || isAdmin);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -48,7 +54,7 @@ export function AppLayout() {
         <Drawer variant={isDesktop ? 'permanent' : 'temporary'} open={isDesktop || mobileOpen} onClose={() => setMobileOpen(false)} sx={{ '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' } }}>
           <Toolbar />
           <List>
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <ListItemButton key={item.path} component={Link} to={item.path} selected={location.pathname.startsWith(item.path)} onClick={() => setMobileOpen(false)}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.label} />

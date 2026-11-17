@@ -1,9 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { LoginPage } from './auth/LoginPage';
+import { RequireAdmin } from './auth/RequireAdmin';
 import { RequireAuth } from './auth/RequireAuth';
 import { AppLayout } from './components/AppLayout';
 import { CreatePurchaseOrderPage } from './features/purchase-orders/CreatePurchaseOrderPage';
 import { PurchaseOrderDetailPage } from './features/purchase-orders/PurchaseOrderDetailPage';
+import { ProductsPage } from './features/products/ProductsPage';
 import { PurchaseOrdersPage } from './features/purchase-orders/PurchaseOrdersPage';
 import { ReportsPage } from './features/reports/ReportsPage';
 import { CreateSalesOrderPage } from './features/sales-orders/CreateSalesOrderPage';
@@ -30,6 +32,9 @@ export default function App() {
           <Route path="/sales-orders/new" element={<CreateSalesOrderPage />} />
           <Route path="/sales-orders/:id" element={<SalesOrderDetailPage />} />
           <Route path="/reports" element={<ReportsPage />} />
+          <Route element={<RequireAdmin />}>
+            <Route path="/products" element={<ProductsPage />} />
+          </Route>
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
