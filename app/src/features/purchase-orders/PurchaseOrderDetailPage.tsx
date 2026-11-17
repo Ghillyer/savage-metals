@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useParams } from 'react-router';
 import { Alert, Box, Button, CircularProgress, MenuItem, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { DetailField } from '../../components/DetailField';
 import { getErrorMessage } from '../../lib/errors';
 import { formatCurrency, formatDateTime, formatUnitPrice, formatWeight } from '../../lib/format';
 import { useLocations } from '../locations/useLocations';
@@ -14,21 +15,7 @@ interface ReceiveLineForm {
   locationId: string;
 }
 
-interface DetailFieldProps {
-  label: string;
-  value: string;
-}
-
 const emptyReceiveLine: ReceiveLineForm = { tagNumber: '', locationId: '' };
-
-function DetailField({ label, value }: DetailFieldProps) {
-  return (
-    <Box>
-      <Typography variant="body2" color="text.secondary">{label}</Typography>
-      <Typography>{value}</Typography>
-    </Box>
-  );
-}
 
 export function PurchaseOrderDetailPage() {
   const id = Number(useParams().id);
