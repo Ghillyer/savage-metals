@@ -3,3 +3,8 @@ export interface Location {
   name: string;
   isActive: boolean;
 }
+
+export interface LocationRequest {
+  name: string;
+  isActive: boolean;
+}

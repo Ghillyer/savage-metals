@@ -5,12 +5,14 @@ import { RequireAuth } from './auth/RequireAuth';
 import { AppLayout } from './components/AppLayout';
 import { CreatePurchaseOrderPage } from './features/purchase-orders/CreatePurchaseOrderPage';
 import { PurchaseOrderDetailPage } from './features/purchase-orders/PurchaseOrderDetailPage';
+import { LocationsPage } from './features/locations/LocationsPage';
 import { ProductsPage } from './features/products/ProductsPage';
 import { PurchaseOrdersPage } from './features/purchase-orders/PurchaseOrdersPage';
 import { ReportsPage } from './features/reports/ReportsPage';
 import { CreateSalesOrderPage } from './features/sales-orders/CreateSalesOrderPage';
 import { SalesOrderDetailPage } from './features/sales-orders/SalesOrderDetailPage';
 import { SalesOrdersPage } from './features/sales-orders/SalesOrdersPage';
+import { VendorsPage } from './features/vendors/VendorsPage';
 import { CreateWorkOrderPage } from './features/work-orders/CreateWorkOrderPage';
 import { WorkOrderDetailPage } from './features/work-orders/WorkOrderDetailPage';
 import { WorkOrdersPage } from './features/work-orders/WorkOrdersPage';
@@ -34,6 +36,8 @@ export default function App() {
           <Route path="/reports" element={<ReportsPage />} />
           <Route element={<RequireAdmin />}>
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/locations" element={<LocationsPage />} />
+            <Route path="/vendors" element={<VendorsPage />} />
           </Route>
         </Route>
       </Route>

@@ -6,3 +6,9 @@ export interface Vendor {
   type: VendorType;
   isActive: boolean;
 }
+
+export interface VendorRequest {
+  name: string;
+  type: VendorType;
+  isActive: boolean;
+}

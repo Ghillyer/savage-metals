@@ -5,8 +5,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import CategoryIcon from '@mui/icons-material/Category';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import PlaceIcon from '@mui/icons-material/Place';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import { useAuth } from '../auth/useAuth';
 import { useIsAdmin } from '../auth/useIsAdmin';
 
@@ -25,6 +27,8 @@ const navItems: NavItem[] = [
   { label: 'Sales Orders', path: '/sales-orders', icon: <LocalShippingIcon /> },
   { label: 'Reports', path: '/reports', icon: <AssessmentIcon /> },
   { label: 'Products', path: '/products', icon: <CategoryIcon />, adminOnly: true },
+  { label: 'Locations', path: '/locations', icon: <PlaceIcon />, adminOnly: true },
+  { label: 'Vendors', path: '/vendors', icon: <StorefrontIcon />, adminOnly: true },
 ];
 
 export function AppLayout() {
