@@ -5,6 +5,9 @@ import { AppLayout } from './components/AppLayout';
 import { CreatePurchaseOrderPage } from './features/purchase-orders/CreatePurchaseOrderPage';
 import { PurchaseOrderDetailPage } from './features/purchase-orders/PurchaseOrderDetailPage';
 import { PurchaseOrdersPage } from './features/purchase-orders/PurchaseOrdersPage';
+import { CreateSalesOrderPage } from './features/sales-orders/CreateSalesOrderPage';
+import { SalesOrderDetailPage } from './features/sales-orders/SalesOrderDetailPage';
+import { SalesOrdersPage } from './features/sales-orders/SalesOrdersPage';
 import { CreateWorkOrderPage } from './features/work-orders/CreateWorkOrderPage';
 import { WorkOrderDetailPage } from './features/work-orders/WorkOrderDetailPage';
 import { WorkOrdersPage } from './features/work-orders/WorkOrdersPage';
@@ -22,6 +25,9 @@ export default function App() {
           <Route path="/work-orders" element={<WorkOrdersPage />} />
           <Route path="/work-orders/new" element={<CreateWorkOrderPage />} />
           <Route path="/work-orders/:id" element={<WorkOrderDetailPage />} />
+          <Route path="/sales-orders" element={<SalesOrdersPage />} />
+          <Route path="/sales-orders/new" element={<CreateSalesOrderPage />} />
+          <Route path="/sales-orders/:id" element={<SalesOrderDetailPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -8,7 +8,7 @@ import { formatCurrency } from '../../lib/format';
 import type { MaterialGrade } from '../../types/purchaseOrder';
 import { useProducts } from '../products/useProducts';
 import { useCreatePurchaseOrder } from './useCreatePurchaseOrder';
-import { useVendors } from '../vendors/useVendor';
+import { useVendors } from '../vendors/useVendors';
 
 interface LineForm {
   key: string;

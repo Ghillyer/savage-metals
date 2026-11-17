@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { Link, Outlet, useLocation } from 'react-router';
 import { AppBar, Box, Button, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { useAuth } from '../auth/useAuth';
@@ -17,6 +18,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: 'Purchase Orders', path: '/purchase-orders', icon: <ReceiptLongIcon /> },
   { label: 'Work Orders', path: '/work-orders', icon: <PrecisionManufacturingIcon /> },
+  { label: 'Sales Orders', path: '/sales-orders', icon: <LocalShippingIcon /> },
 ];
 
 export function AppLayout() {

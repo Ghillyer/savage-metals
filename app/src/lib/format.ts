@@ -2,6 +2,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', cu
 const dateTimeFormatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short' });
 const unitPriceFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 4 });
 const weightFormatter = new Intl.NumberFormat('en-US', { maximumFractionDigits: 4 });
+const percentFormatter = new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 1, maximumFractionDigits: 1 });
 
 export function formatCurrency(value: number) {
   return currencyFormatter.format(value);
@@ -17,4 +18,8 @@ export function formatUnitPrice(value: number) {
 
 export function formatWeight(value: number) {
   return `${weightFormatter.format(value)} lbs`;
+}
+
+export function formatPercent(value: number) {
+  return percentFormatter.format(value);
 }
