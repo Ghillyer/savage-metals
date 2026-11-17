@@ -71,6 +71,7 @@ public static class ServiceCollectionExtension
         services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
         // Repositories
+        services.AddScoped<IInventoryRepository, InventoryRepository>();
         services.AddScoped<ILocationRepository, LocationRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
@@ -78,6 +79,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IVendorRepository, VendorRepository>();
 
         // Services
+        services.AddScoped<IInventoryService, InventoryService>();
         services.AddScoped<ILocationService, LocationService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();

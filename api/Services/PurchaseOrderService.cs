@@ -12,6 +12,7 @@ public class PurchaseOrderService(
     IVendorRepository vendorRepository,
     IProductRepository productRepository,
     ILocationRepository locationRepository,
+    IInventoryRepository inventoryRepository,
     ICallerContext callerContext) : IPurchaseOrderService
 {
     private const int MaxLength = 200;
@@ -99,6 +100,7 @@ public class PurchaseOrderService(
         }
 
         EnsureTagsAreUnique(items);
+        await EnsureTagsAreAvailableAsync(items, cancellationToken);
 
         var received = await purchaseOrderRepository.ReceiveAsync(id, receivedAtUtc, items, cancellationToken);
 
@@ -247,6 +249,17 @@ public class PurchaseOrderService(
         if (hasDuplicates)
         {
             throw new InvalidRequestException("Each item needs a different tag number.");
+        }
+    }
+
+    private async Task EnsureTagsAreAvailableAsync(List<InventoryItem> items, CancellationToken cancellationToken)
+    {
+        var tagNumbers = items.Select(item => item.TagNumber).ToList();
+        var existingTagNumber = await inventoryRepository.FindExistingTagNumberAsync(tagNumbers, cancellationToken);
+
+        if (existingTagNumber is not null)
+        {
+            throw new ConflictException($"Tag {existingTagNumber} is already in use.");
         }
     }
 
