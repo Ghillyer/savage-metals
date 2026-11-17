@@ -9,6 +9,18 @@ namespace SavageMetals.Api.DAL;
 
 public class InventoryRepository(IDbConnectionFactory connectionFactory) : IInventoryRepository
 {
+    private const string SelectColumns = $"""
+        {nameof(InventoryItem.Id)},
+        {nameof(InventoryItem.TagNumber)},
+        {nameof(InventoryItem.ProductId)},
+        {nameof(InventoryItem.LocationId)},
+        {nameof(InventoryItem.Weight)},
+        {nameof(InventoryItem.TotalCost)},
+        {nameof(InventoryItem.Status)},
+        {nameof(InventoryItem.CreatedAtUtc)},
+        {nameof(InventoryItem.PurchaseOrderLineId)},
+        {nameof(InventoryItem.SourceWorkOrderId)}
+        """;
     public async Task<IReadOnlyList<InventoryItemResponse>> GetAllAsync(InventoryStatus? status, CancellationToken cancellationToken)
     {
         const string sql = """
@@ -35,6 +47,20 @@ public class InventoryRepository(IDbConnectionFactory connectionFactory) : IInve
         var command = new CommandDefinition(sql, new { Status = status }, cancellationToken: cancellationToken);
         var results = await connection.QueryAsync<InventoryItemResponse>(command);
         return results.ToList();
+    }
+
+    public async Task<InventoryItem?> GetByIdAsync(int id, CancellationToken cancellationToken)
+    {
+        const string sql = $"""
+            SELECT
+                {SelectColumns}
+            FROM InventoryItems
+            WHERE {nameof(InventoryItem.Id)} = @Id
+            """;
+
+        await using var connection = await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+        var command = new CommandDefinition(sql, new { Id = id }, cancellationToken: cancellationToken);
+        return await connection.QuerySingleOrDefaultAsync<InventoryItem>(command);
     }
 
     public async Task<string?> FindExistingTagNumberAsync(IReadOnlyList<string> tagNumbers, CancellationToken cancellationToken)

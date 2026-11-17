@@ -77,6 +77,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IVendorRepository, VendorRepository>();
+        services.AddScoped<IWorkOrderRepository, WorkOrderRepository>();
 
         // Services
         services.AddScoped<IInventoryService, InventoryService>();
@@ -84,6 +85,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
         services.AddScoped<IVendorService, VendorService>();
+        services.AddScoped<IWorkOrderService, WorkOrderService>();
 
         return services;
     }
