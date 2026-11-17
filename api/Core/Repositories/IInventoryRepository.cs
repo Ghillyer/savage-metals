@@ -8,5 +8,6 @@ public interface IInventoryRepository
 {
     Task<IReadOnlyList<InventoryItemResponse>> GetAllAsync(InventoryStatus? status, CancellationToken cancellationToken = default);
     Task<InventoryItem?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<InventoryItem>> GetByIdsAsync(IReadOnlyList<int> ids, CancellationToken cancellationToken = default);
     Task<string?> FindExistingTagNumberAsync(IReadOnlyList<string> tagNumbers, CancellationToken cancellationToken = default);
 }

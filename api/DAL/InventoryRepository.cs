@@ -63,6 +63,21 @@ public class InventoryRepository(IDbConnectionFactory connectionFactory) : IInve
         return await connection.QuerySingleOrDefaultAsync<InventoryItem>(command);
     }
 
+    public async Task<IReadOnlyList<InventoryItem>> GetByIdsAsync(IReadOnlyList<int> ids, CancellationToken cancellationToken)
+    {
+        const string sql = $"""
+            SELECT
+                {SelectColumns}
+            FROM InventoryItems
+            WHERE {nameof(InventoryItem.Id)} IN @Ids
+            """;
+
+        await using var connection = await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+        var command = new CommandDefinition(sql, new { Ids = ids }, cancellationToken: cancellationToken);
+        var results = await connection.QueryAsync<InventoryItem>(command);
+        return results.ToList();
+    }
+
     public async Task<string?> FindExistingTagNumberAsync(IReadOnlyList<string> tagNumbers, CancellationToken cancellationToken)
     {
         const string sql = $"""
