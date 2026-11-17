@@ -1,26 +1,44 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SavageMetals.Api.Core.DTOs.Users;
 using SavageMetals.Api.Core.Interfaces;
+using SavageMetals.Api.Security;
 
 namespace SavageMetals.Api.Controllers;
 
 [ApiController]
 [Route("api/users")]
-public class UsersController(ICallerContext callerContext) : ControllerBase
+public class UsersController(IUserService userService) : ControllerBase
 {
-    [HttpGet("me")]
-    [ProducesResponseType<CurrentUserResponse>(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public ActionResult<CurrentUserResponse> GetCurrentUser()
+    [HttpGet]
+    [Authorize(Policy = Policies.AdminOnly)]
+    [ProducesResponseType<IReadOnlyList<UserResponse>>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult<IReadOnlyList<UserResponse>>> GetAll(CancellationToken cancellationToken)
     {
-        var currentUser = new CurrentUserResponse
-        {
-            Id = callerContext.UserId,
-            Email = callerContext.Email,
-            DisplayName = callerContext.DisplayName,
-            Role = callerContext.Role
-        };
+        return Ok(await userService.GetAllAsync(cancellationToken));
+    }
 
-        return Ok(currentUser);
+    [HttpPost]
+    [Authorize(Policy = Policies.AdminOnly)]
+    [ProducesResponseType<UserResponse>(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<UserResponse>> Create(CreateUserRequest request, CancellationToken cancellationToken)
+    {
+        var user = await userService.CreateAsync(request, cancellationToken);
+        return Created($"/api/users/{user.Id}", user);
+    }
+
+    [HttpPut("{id:int}")]
+    [Authorize(Policy = Policies.AdminOnly)]
+    [ProducesResponseType<UserResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<UserResponse>> Update(int id, UpdateUserRequest request, CancellationToken cancellationToken)
+    {
+        return Ok(await userService.UpdateAsync(id, request, cancellationToken));
     }
 }

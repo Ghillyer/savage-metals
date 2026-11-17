@@ -1,4 +1,7 @@
 using System.Security.Claims;
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -36,6 +39,13 @@ public static class ServiceCollectionExtension
         services.AddScoped<CallerContext>();
         services.AddScoped<ICallerContext>(serviceProvider => serviceProvider.GetRequiredService<CallerContext>());
         services.AddScoped<FirebaseJwtBearerEvents>();
+        services.AddSingleton(_ => FirebaseApp.Create(new AppOptions
+        {
+            Credential = CreateFirebaseCredential(firebaseSettings),
+            ProjectId = firebaseSettings.ProjectId,
+        }));
+        services.AddSingleton(serviceProvider => FirebaseAuth.GetAuth(serviceProvider.GetRequiredService<FirebaseApp>()));
+        services.AddScoped<IIdentityService, FirebaseIdentityService>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -88,9 +98,25 @@ public static class ServiceCollectionExtension
         services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
         services.AddScoped<IReportService, ReportService>();
         services.AddScoped<ISalesOrderService, SalesOrderService>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IVendorService, VendorService>();
         services.AddScoped<IWorkOrderService, WorkOrderService>();
 
         return services;
+    }
+
+    private static GoogleCredential CreateFirebaseCredential(FirebaseSettings settings)
+    {
+        if (!string.IsNullOrWhiteSpace(settings.ServiceAccountJson))
+        {
+            return CredentialFactory.FromJson<ServiceAccountCredential>(settings.ServiceAccountJson).ToGoogleCredential();
+        }
+
+        if (!string.IsNullOrWhiteSpace(settings.ServiceAccountPath))
+        {
+            return CredentialFactory.FromFile<ServiceAccountCredential>(settings.ServiceAccountPath).ToGoogleCredential();
+        }
+
+        throw new InvalidOperationException("Firebase:ServiceAccountJson or Firebase:ServiceAccountPath is not configured.");
     }
 }
