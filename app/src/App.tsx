@@ -12,6 +12,7 @@ import { ReportsPage } from './features/reports/ReportsPage';
 import { CreateSalesOrderPage } from './features/sales-orders/CreateSalesOrderPage';
 import { SalesOrderDetailPage } from './features/sales-orders/SalesOrderDetailPage';
 import { SalesOrdersPage } from './features/sales-orders/SalesOrdersPage';
+import { UsersPage } from './features/users/UsersPage';
 import { VendorsPage } from './features/vendors/VendorsPage';
 import { CreateWorkOrderPage } from './features/work-orders/CreateWorkOrderPage';
 import { WorkOrderDetailPage } from './features/work-orders/WorkOrderDetailPage';
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/locations" element={<LocationsPage />} />
             <Route path="/vendors" element={<VendorsPage />} />
+            <Route path="/users" element={<UsersPage />} />
           </Route>
         </Route>
       </Route>

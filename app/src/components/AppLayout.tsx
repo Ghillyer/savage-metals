@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { Link, Outlet, useLocation } from 'react-router';
 import { AppBar, Box, Button, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import PeopleIcon from '@mui/icons-material/People';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import CategoryIcon from '@mui/icons-material/Category';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -29,6 +30,7 @@ const navItems: NavItem[] = [
   { label: 'Products', path: '/products', icon: <CategoryIcon />, adminOnly: true },
   { label: 'Locations', path: '/locations', icon: <PlaceIcon />, adminOnly: true },
   { label: 'Vendors', path: '/vendors', icon: <StorefrontIcon />, adminOnly: true },
+  { label: 'Users', path: '/users', icon: <PeopleIcon />, adminOnly: true },
 ];
 
 export function AppLayout() {
