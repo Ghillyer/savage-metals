@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, Stack, Switch, TextField } from '@mui/material';
 import { getErrorMessage } from '../../lib/errors';
 import type { Product } from '../../types/product';
@@ -19,6 +19,7 @@ function toNumber(value: string) {
 
 export function ProductDialog({ product, onClose }: ProductDialogProps) {
   const saveProduct = useSaveProduct();
+  const nameRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState(product?.name ?? '');
   const [purchasePrice, setPurchasePrice] = useState(toInput(product?.purchasePrice));
   const [salesPrice, setSalesPrice] = useState(toInput(product?.salesPrice));
@@ -44,13 +45,13 @@ export function ProductDialog({ product, onClose }: ProductDialogProps) {
   };
 
   return (
-    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open onClose={onClose} fullWidth maxWidth="sm" slotProps={{ transition: { onEntered: () => nameRef.current?.focus() } }}>
       <Box component="form" onSubmit={handleSubmit}>
         <DialogTitle>{product ? 'Edit product' : 'New product'}</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             {saveProduct.isError && <Alert severity="error">{getErrorMessage(saveProduct.error)}</Alert>}
-            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
+            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required inputRef={nameRef} />
             <TextField label="Purchase price per lb" type="number" value={purchasePrice} onChange={(event) => setPurchasePrice(event.target.value)} slotProps={{ htmlInput: { min: 0, step: 'any', inputMode: 'decimal' } }} />
             <TextField label="Sales price per lb" type="number" value={salesPrice} onChange={(event) => setSalesPrice(event.target.value)} slotProps={{ htmlInput: { min: 0, step: 'any', inputMode: 'decimal' } }} />
             <FormControlLabel control={<Switch checked={isScrap} onChange={(event) => setIsScrap(event.target.checked)} />} label="Scrap" />

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, Stack, Switch, TextField } from '@mui/material';
 import { getErrorMessage } from '../../lib/errors';
 import type { Location } from '../../types/location';
@@ -11,6 +11,7 @@ interface LocationDialogProps {
 
 export function LocationDialog({ location, onClose }: LocationDialogProps) {
   const saveLocation = useSaveLocation();
+  const nameRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState(location?.name ?? '');
   const [isActive, setIsActive] = useState(location?.isActive ?? true);
 
@@ -20,13 +21,13 @@ export function LocationDialog({ location, onClose }: LocationDialogProps) {
   };
 
   return (
-    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open onClose={onClose} fullWidth maxWidth="sm" slotProps={{ transition: { onEntered: () => nameRef.current?.focus() } }}>
       <Box component="form" onSubmit={handleSubmit}>
         <DialogTitle>{location ? 'Edit location' : 'New location'}</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             {saveLocation.isError && <Alert severity="error">{getErrorMessage(saveLocation.error)}</Alert>}
-            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
+            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required inputRef={nameRef} />
             <FormControlLabel control={<Switch checked={isActive} onChange={(event) => setIsActive(event.target.checked)} />} label="Active" />
           </Stack>
         </DialogContent>

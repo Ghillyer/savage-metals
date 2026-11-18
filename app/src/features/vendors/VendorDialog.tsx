@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, MenuItem, Stack, Switch, TextField } from '@mui/material';
 import { getErrorMessage } from '../../lib/errors';
 import type { Vendor, VendorType } from '../../types/vendor';
@@ -13,6 +13,7 @@ const vendorTypes: VendorType[] = ['Supplier', 'Customer', 'Both'];
 
 export function VendorDialog({ vendor, onClose }: VendorDialogProps) {
   const saveVendor = useSaveVendor();
+  const nameRef = useRef<HTMLInputElement>(null);
   const [name, setName] = useState(vendor?.name ?? '');
   const [type, setType] = useState<VendorType>(vendor?.type ?? 'Supplier');
   const [isActive, setIsActive] = useState(vendor?.isActive ?? true);
@@ -23,13 +24,13 @@ export function VendorDialog({ vendor, onClose }: VendorDialogProps) {
   };
 
   return (
-    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open onClose={onClose} fullWidth maxWidth="sm" slotProps={{ transition: { onEntered: () => nameRef.current?.focus() } }}>
       <Box component="form" onSubmit={handleSubmit}>
         <DialogTitle>{vendor ? 'Edit vendor' : 'New vendor'}</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             {saveVendor.isError && <Alert severity="error">{getErrorMessage(saveVendor.error)}</Alert>}
-            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
+            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required inputRef={nameRef} />
             <TextField select label="Type" value={type} onChange={(event) => setType(event.target.value as VendorType)} required>
               {vendorTypes.map((vendorType) => (
                 <MenuItem key={vendorType} value={vendorType}>{vendorType}</MenuItem>

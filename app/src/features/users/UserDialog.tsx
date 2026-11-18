@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, MenuItem, Stack, Switch, TextField, Typography } from '@mui/material';
 import { useAuth } from '../../auth/useAuth';
 import { getErrorMessage } from '../../lib/errors';
@@ -17,6 +17,7 @@ export function UserDialog({ user, onClose }: UserDialogProps) {
   const { currentUser } = useAuth();
   const createUser = useCreateUser();
   const updateUser = useUpdateUser();
+  const firstFieldRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState('');
   const [displayName, setDisplayName] = useState(user?.displayName ?? '');
   const [role, setRole] = useState<UserRole>(user?.role ?? 'Purchaser');
@@ -36,7 +37,7 @@ export function UserDialog({ user, onClose }: UserDialogProps) {
   };
 
   return (
-    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open onClose={onClose} fullWidth maxWidth="sm" slotProps={{ transition: { onEntered: () => firstFieldRef.current?.focus() } }}>
       <Box component="form" onSubmit={handleSubmit}>
         <DialogTitle>{user ? 'Edit user' : 'Invite user'}</DialogTitle>
         <DialogContent>
@@ -45,9 +46,9 @@ export function UserDialog({ user, onClose }: UserDialogProps) {
             {user ? (
               <TextField label="Email" value={user.email} disabled />
             ) : (
-              <TextField label="Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoFocus />
+              <TextField label="Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required inputRef={firstFieldRef} />
             )}
-            <TextField label="Name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} required autoFocus={Boolean(user)} />
+            <TextField label="Name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} required inputRef={user ? firstFieldRef : undefined} />
             <TextField select label="Role" value={role} onChange={(event) => setRole(event.target.value as UserRole)} disabled={isSelf} required>
               {roles.map((option) => (
                 <MenuItem key={option} value={option}>{option}</MenuItem>
