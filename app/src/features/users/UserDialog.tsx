@@ -45,9 +45,9 @@ export function UserDialog({ user, onClose }: UserDialogProps) {
             {user ? (
               <TextField label="Email" value={user.email} disabled />
             ) : (
-              <TextField label="Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+              <TextField label="Email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required autoFocus />
             )}
-            <TextField label="Name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} required />
+            <TextField label="Name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} required autoFocus={Boolean(user)} />
             <TextField select label="Role" value={role} onChange={(event) => setRole(event.target.value as UserRole)} disabled={isSelf} required>
               {roles.map((option) => (
                 <MenuItem key={option} value={option}>{option}</MenuItem>

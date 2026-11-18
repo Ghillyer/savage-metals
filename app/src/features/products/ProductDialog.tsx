@@ -50,7 +50,7 @@ export function ProductDialog({ product, onClose }: ProductDialogProps) {
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             {saveProduct.isError && <Alert severity="error">{getErrorMessage(saveProduct.error)}</Alert>}
-            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required />
+            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
             <TextField label="Purchase price per lb" type="number" value={purchasePrice} onChange={(event) => setPurchasePrice(event.target.value)} slotProps={{ htmlInput: { min: 0, step: 'any', inputMode: 'decimal' } }} />
             <TextField label="Sales price per lb" type="number" value={salesPrice} onChange={(event) => setSalesPrice(event.target.value)} slotProps={{ htmlInput: { min: 0, step: 'any', inputMode: 'decimal' } }} />
             <FormControlLabel control={<Switch checked={isScrap} onChange={(event) => setIsScrap(event.target.checked)} />} label="Scrap" />

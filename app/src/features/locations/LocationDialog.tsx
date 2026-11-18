@@ -26,7 +26,7 @@ export function LocationDialog({ location, onClose }: LocationDialogProps) {
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             {saveLocation.isError && <Alert severity="error">{getErrorMessage(saveLocation.error)}</Alert>}
-            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required />
+            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
             <FormControlLabel control={<Switch checked={isActive} onChange={(event) => setIsActive(event.target.checked)} />} label="Active" />
           </Stack>
         </DialogContent>

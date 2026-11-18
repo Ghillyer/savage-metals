@@ -29,7 +29,7 @@ export function VendorDialog({ vendor, onClose }: VendorDialogProps) {
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             {saveVendor.isError && <Alert severity="error">{getErrorMessage(saveVendor.error)}</Alert>}
-            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required />
+            <TextField label="Name" value={name} onChange={(event) => setName(event.target.value)} required autoFocus />
             <TextField select label="Type" value={type} onChange={(event) => setType(event.target.value as VendorType)} required>
               {vendorTypes.map((vendorType) => (
                 <MenuItem key={vendorType} value={vendorType}>{vendorType}</MenuItem>
