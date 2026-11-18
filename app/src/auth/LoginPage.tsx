@@ -41,11 +41,11 @@ export function LoginPage() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2 }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2, background: 'linear-gradient(160deg, #050816 40%, #0D1A4F)' }}>
       <Paper sx={{ p: 4, width: '100%', maxWidth: 420 }}>
         <Box component="form" onSubmit={handleSubmit}>
           <Stack spacing={3}>
-            <Typography variant="h4">Savage Metals</Typography>
+            <Typography variant="h4" sx={{ fontWeight: 700, letterSpacing: 1 }}>SAVAGE <Box component="span" sx={{ color: 'secondary.main', fontSize: '0.7em', letterSpacing: 3 }}>METALS</Box></Typography>
             {error && <Alert severity="error">{error}</Alert>}
             <TextField label="Email" type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
             <TextField label="Password" type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />

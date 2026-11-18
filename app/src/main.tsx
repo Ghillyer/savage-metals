@@ -1,3 +1,5 @@
+import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/manrope';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { CssBaseline, ThemeProvider } from '@mui/material';
@@ -11,7 +13,7 @@ import { theme } from './theme';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme />
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AuthProvider>

@@ -51,7 +51,7 @@ export function AppLayout() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>Savage Metals</Typography>
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 700, letterSpacing: 1 }}>SAVAGE <Box component="span" sx={{ color: 'secondary.main', fontSize: '0.8em', fontWeight: 600, letterSpacing: 3 }}>METALS</Box></Typography>
           <Typography sx={{ mr: 2, display: { xs: 'none', sm: 'block' } }}>{currentUser?.displayName} · {currentUser?.role}</Typography>
           <Button color="inherit" onClick={signOut}>Sign out</Button>
         </Toolbar>
