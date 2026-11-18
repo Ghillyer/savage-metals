@@ -36,7 +36,7 @@ export function WorkOrdersPage() {
                   <TableCell>{workOrder.inputTagNumber} · {workOrder.inputProductName}</TableCell>
                   <TableCell align="right">{formatWeight(workOrder.inputWeight)}</TableCell>
                   <TableCell align="right">{workOrder.outputCount}</TableCell>
-                  <TableCell>{formatDateTime(workOrder.createdAtUtc)}</TableCell>
+                  <TableCell sx={{ whiteSpace: 'nowrap' }}>{formatDateTime(workOrder.createdAtUtc)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

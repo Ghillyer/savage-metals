@@ -28,7 +28,7 @@ export function SalesOrdersPage() {
                 <TableCell align="right">Revenue</TableCell>
                 <TableCell align="right">Profit</TableCell>
                 <TableCell align="right">Margin</TableCell>
-                <TableCell>Created</TableCell>
+                <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>Created</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -40,7 +40,7 @@ export function SalesOrdersPage() {
                   <TableCell align="right">{formatCurrency(salesOrder.revenue)}</TableCell>
                   <TableCell align="right">{formatCurrency(salesOrder.profit)}</TableCell>
                   <TableCell align="right">{formatPercent(salesOrder.margin)}</TableCell>
-                  <TableCell>{formatDateTime(salesOrder.createdAtUtc)}</TableCell>
+                  <TableCell sx={{ whiteSpace: 'nowrap', display: { xs: 'none', md: 'table-cell' } }}>{formatDateTime(salesOrder.createdAtUtc)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

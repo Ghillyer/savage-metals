@@ -36,7 +36,7 @@ export function PurchaseOrdersPage() {
                   <TableCell>{purchaseOrder.poNumber}</TableCell>
                   <TableCell>{purchaseOrder.vendorName}</TableCell>
                   <TableCell><PurchaseOrderStatusChip status={purchaseOrder.status} /></TableCell>
-                  <TableCell>{formatDateTime(purchaseOrder.createdAtUtc)}</TableCell>
+                  <TableCell sx={{ whiteSpace: 'nowrap' }}>{formatDateTime(purchaseOrder.createdAtUtc)}</TableCell>
                   <TableCell align="right">{formatCurrency(purchaseOrder.total)}</TableCell>
                 </TableRow>
               ))}

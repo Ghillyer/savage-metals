@@ -120,6 +120,7 @@ export const theme = createTheme({
           fontWeight: 600,
           color: '#9AA4BF',
           backgroundColor: brand.surfaceHeader,
+          whiteSpace: 'nowrap',
         },
       },
     },
