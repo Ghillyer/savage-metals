@@ -256,6 +256,7 @@ I skipped the optional extras (photos on POs, barcode/QR labels, and offline sup
 
 ## What I'd do next
 
+- **Cancelling orders.** Let users cancel a purchase order, work order, or sales order instead of deleting it. Most orders can't simply be deleted because they're tied together through inventory: cancelling a work order has to put the original coil back in stock and remove the pieces it made, and cancelling a sales order has to return the items to inventory. Keeping cancelled orders also keeps the history of who did what and stops PO and tag numbers from being reused. An open PO that hasn't been received yet could still be deleted outright, since nothing depends on it.
 - **Editing orders.** Allow changes to purchase orders, work orders, and sales orders where it's safe, like before a PO is received or before an item has moved on to another order.
 - **Traceability report.** Follow any piece of metal from the PO it was bought on, through every work order that processed it, to the sales order it shipped on.
 - **Profit and loss reports.** Profit by month, by year, or for any date range.
