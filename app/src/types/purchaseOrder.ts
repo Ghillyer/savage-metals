@@ -55,3 +55,7 @@ export interface ReceiveLineRequest {
 export interface ReceivePurchaseOrderRequest {
   lines: ReceiveLineRequest[];
 }
+
+export interface NextPurchaseOrderNumber {
+  poNumber: string;
+}

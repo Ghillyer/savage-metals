@@ -8,6 +8,7 @@ import { formatCurrency } from '../../lib/format';
 import type { MaterialGrade } from '../../types/purchaseOrder';
 import { useProducts } from '../products/useProducts';
 import { useCreatePurchaseOrder } from './useCreatePurchaseOrder';
+import { useNextPoNumber } from './useNextPoNumber';
 import { useVendors } from '../vendors/useVendors';
 
 interface LineForm {
@@ -33,7 +34,9 @@ export function CreatePurchaseOrderPage() {
   const { data: vendors = [] } = useVendors();
   const { data: products = [] } = useProducts();
   const createPurchaseOrder = useCreatePurchaseOrder();
-  const [poNumber, setPoNumber] = useState('');
+  const { data: nextPoNumber } = useNextPoNumber();
+  const [poNumber, setPoNumber] = useState<string>();
+  const poNumberValue = poNumber ?? nextPoNumber ?? '';
   const [vendorId, setVendorId] = useState('');
   const [lines, setLines] = useState<LineForm[]>([createLine()]);
 
@@ -58,7 +61,7 @@ export function CreatePurchaseOrderPage() {
 
     createPurchaseOrder.mutate(
       {
-        poNumber,
+        poNumber: poNumberValue,
         vendorId: Number(vendorId),
         lines: lines.map((line) => ({
           productId: Number(line.productId),
@@ -78,7 +81,7 @@ export function CreatePurchaseOrderPage() {
         {createPurchaseOrder.isError && <Alert severity="error">{getErrorMessage(createPurchaseOrder.error)}</Alert>}
         <Paper sx={{ p: 3 }}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField label="PO number" value={poNumber} onChange={(event) => setPoNumber(event.target.value)} required />
+            <TextField label="PO number" value={poNumberValue} onChange={(event) => setPoNumber(event.target.value)} required />
             <TextField select label="Vendor" value={vendorId} onChange={(event) => setVendorId(event.target.value)} required>
               {suppliers.map((vendor) => (
                 <MenuItem key={vendor.id} value={vendor.id.toString()}>{vendor.name}</MenuItem>

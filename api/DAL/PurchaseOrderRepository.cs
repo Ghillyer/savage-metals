@@ -167,6 +167,18 @@ public class PurchaseOrderRepository(IDbConnectionFactory connectionFactory) : I
         return await connection.ExecuteScalarAsync<bool>(command);
     }
 
+    public async Task<int?> GetMaxNumericPoNumberAsync(CancellationToken cancellationToken)
+    {
+        const string sql = $"""
+            SELECT MAX(TRY_CAST({nameof(PurchaseOrder.PoNumber)} AS int))
+            FROM PurchaseOrders
+            """;
+
+        await using var connection = await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+        var command = new CommandDefinition(sql, cancellationToken: cancellationToken);
+        return await connection.ExecuteScalarAsync<int?>(command);
+    }
+
     public async Task<int> CreateAsync(PurchaseOrder purchaseOrder, IReadOnlyList<PurchaseOrderLine> lines, CancellationToken cancellationToken)
     {
         const string sql = $"""

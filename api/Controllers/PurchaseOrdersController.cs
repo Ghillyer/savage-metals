@@ -15,6 +15,13 @@ public class PurchaseOrdersController(IPurchaseOrderService purchaseOrderService
         return Ok(await purchaseOrderService.GetAllAsync(cancellationToken));
     }
 
+    [HttpGet("next-number")]
+    [ProducesResponseType<NextPurchaseOrderNumberResponse>(StatusCodes.Status200OK)]
+    public async Task<ActionResult<NextPurchaseOrderNumberResponse>> GetNextNumber(CancellationToken cancellationToken)
+    {
+        return Ok(await purchaseOrderService.GetNextPoNumberAsync(cancellationToken));
+    }
+
     [HttpGet("{id:int}")]
     [ProducesResponseType<PurchaseOrderResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

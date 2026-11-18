@@ -10,6 +10,7 @@ public interface IPurchaseOrderRepository
     Task<PurchaseOrder?> GetByIdAsync(int id, CancellationToken cancellationToken);
     Task<IReadOnlyList<PurchaseOrderLine>> GetLinesAsync(int purchaseOrderId, CancellationToken cancellationToken);
     Task<bool> PoNumberExistsAsync(string poNumber, int? excludeId, CancellationToken cancellationToken);
+    Task<int?> GetMaxNumericPoNumberAsync(CancellationToken cancellationToken = default);
     Task<int> CreateAsync(PurchaseOrder purchaseOrder, IReadOnlyList<PurchaseOrderLine> lines, CancellationToken cancellationToken);
     Task<bool> UpdateAsync(PurchaseOrder purchaseOrder, IReadOnlyList<PurchaseOrderLine> lines, CancellationToken cancellationToken);
     Task<bool> ReceiveAsync(int purchaseOrderId, DateTime receivedAtUtc, IReadOnlyList<InventoryItem> items, CancellationToken cancellationToken);

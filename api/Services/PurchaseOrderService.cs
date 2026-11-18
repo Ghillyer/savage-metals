@@ -16,6 +16,7 @@ public class PurchaseOrderService(
     ICallerContext callerContext) : IPurchaseOrderService
 {
     private const int MaxLength = 200;
+    private const int FirstPoNumber = 2201;
 
     public async Task<IReadOnlyList<PurchaseOrderSummaryResponse>> GetAllAsync(CancellationToken cancellationToken)
     {
@@ -26,6 +27,14 @@ public class PurchaseOrderService(
     {
         return await purchaseOrderRepository.GetDetailAsync(id, cancellationToken)
             ?? throw new NotFoundException($"Purchase order {id} was not found.");
+    }
+
+    public async Task<NextPurchaseOrderNumberResponse> GetNextPoNumberAsync(CancellationToken cancellationToken)
+    {
+        var maxPoNumber = await purchaseOrderRepository.GetMaxNumericPoNumberAsync(cancellationToken);
+        var nextPoNumber = maxPoNumber is { } max ? max + 1 : FirstPoNumber;
+
+        return new NextPurchaseOrderNumberResponse { PoNumber = nextPoNumber.ToString() };
     }
 
     public async Task<PurchaseOrderResponse> CreateAsync(PurchaseOrderRequest request, CancellationToken cancellationToken)
