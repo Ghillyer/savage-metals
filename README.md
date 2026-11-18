@@ -17,10 +17,10 @@ The app runs on free Azure tiers that go to sleep when they're not being used. T
 
 The live app already has a full example entered:
 
-1. **PO 2201** buys three coils from Great Lakes Steel Supply for $30,950. It has been received into Coil Storage.
-2. **WO-1001** slits coil C-2401 (20,000 lb, $18,400) into four 4,900 lb coils at $4,600 each, plus 400 lb of scrap at $0.
-3. **SO 5001** sells two of those coils to Midwest Fabrication Co. for $11,760. Cost was $9,200, so profit is $2,560 (21.8% margin).
-4. **Reports** show $21,750 still on hand: $30,950 bought minus $9,200 sold.
+1. **PO 2201** buys a hot-rolled steel coil and aluminum sheet from Midwest Steel Supply for $23,550. The coil is tagged C-1001 in Bay 2, and the aluminum is in Rack 1.
+2. **WO-1001** slits C-1001 (40,000 lb, $16,800) into four 9,900 lb slit coils at $4,200 each in Rack 4, plus 400 lb of scrap at $0 in the Scrap Bin.
+3. **SO 5001** ships two slit coils to Great Lakes Fabrication for $10,890. Cost was $8,400, so profit is $2,490 (22.9% margin).
+4. **Reports** show $15,150 still on hand: $23,550 bought minus $8,400 sold.
 
 Sign in as the Purchaser to see the same app without the admin pages.
 
@@ -249,6 +249,10 @@ Open `http://localhost:5173`.
 ## AI usage
 
 I used AI heavily on this project, mainly Claude and OpenAI's Astras 6. They helped plan the architecture, generate code, explain options and tradeoffs, and review the work. I directed the decisions, made the changes in the codebase, tested each feature through the API and the UI before committing, and deployed and verified the app on Azure.
+
+## What I skipped
+
+I skipped the optional extras (photos on POs, barcode/QR labels, and offline support) to focus on getting the core workflow right, the numbers correct, and the app easy to use on an iPad within the week.
 
 ## What I'd do next
 
